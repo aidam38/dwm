@@ -1889,6 +1889,7 @@ togglefloating(const Arg *arg)
  		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 		       selmon->sel->w - selmon->sel->bw * 2, selmon->sel->h - selmon->sel->bw * 2, 0);
 	}
+	restack(selmon);
 }
 
 void
