@@ -74,7 +74,7 @@ static const char *hot[] = { "hot.sh", NULL };
 static const char *spotify[] = { "spotify", NULL, NULL, NULL, NULL, "Spotify" };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenu_res[] = { "dmenu_run_res", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
-static const char *fzf[] = { "st", "fzf", NULL };
+static const char *fzf[] = { "st", "-e", "fzf.sh", NULL };
 static const char *exitprompt[] = { "exitprompt", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
 static const char *volumeup[] = { "pamixer", "-i", "5", NULL };
 static const char *volumedown[] = { "pamixer", "-d", "5", NULL };
@@ -117,13 +117,16 @@ static Key keys[] = {
 	{ 0,                            XK_Pause,  spawn,          {.v = sptpause } },
 /* basic movement */
 	{ MODKEY,                       XK_j,      selectclient,   {.i = 0} },
-	{ MODKEY,                       XK_k,      selectclient,   {.i = 1} },
-	{ MODKEY,                       XK_l,      selectclient,   {.i = 2} },
-	{ MODKEY,                       XK_uring,  selectclient,   {.i = 3} },
+	{ MODKEY,                       XK_m,      selectclient,   {.i = 1} },
+	{ MODKEY|ShiftMask,             XK_m,      selectclient,   {.i = 2} },
+	{ MODKEY,                       XK_k,      selectclient,   {.i = 10} },
+	{ MODKEY,                       XK_comma,  selectclient,   {.i = 11} },
+	{ MODKEY|ShiftMask,             XK_comma,  selectclient,   {.i = 12} },
 	{ MODKEY|ControlMask|ShiftMask, XK_j,      focusstack,     {.i = +1} },
 	{ MODKEY|ControlMask|ShiftMask, XK_k,      focusstack,     {.i = -1} },
 /* setting layouts */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_z,      togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
 /* moving windows */
@@ -132,7 +135,6 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_h,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_l,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
-	{ MODKEY,                       XK_z,      togglefloating, {0} },
 /* resizing windows */
 	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
@@ -165,25 +167,16 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Up,      moveresize,     {.v = (int []){ 0, 0, 0, -100 }}},
 	{ MODKEY|ShiftMask,             XK_Right,   moveresize,     {.v = (int []){ 0, 0, 100, 0 }}},
 	{ MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -100, 0 }}},
-//	{ MODKEY,           XK_1,       moveplace,      {.ui = WIN_NW }},
-//	{ MODKEY,           XK_2,       moveplace,      {.ui = WIN_N  }},
-//	{ MODKEY,           XK_3,       moveplace,      {.ui = WIN_NE }},
-//	{ MODKEY,           XK_a,       moveplace,      {.ui = WIN_W  }},
-//	{ MODKEY,           XK_s,       moveplace,      {.ui = WIN_C  }},
-//	{ MODKEY,           XK_d,       moveplace,      {.ui = WIN_E  }},
-//	{ MODKEY,           XK_z,       moveplace,      {.ui = WIN_SW }},
-//	{ MODKEY,           XK_x,       moveplace,      {.ui = WIN_S  }},
-//	{ MODKEY,           XK_c,       moveplace,      {.ui = WIN_SE }},
 /* miscellaneous */
 	{ MODKEY|ShiftMask,	        XK_x,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 /* multiple monitor shit I don't use */
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_parenleft,  focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_parenright, focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_parenleft,  tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_parenright, tagmon,         {.i = +1 } },
 };
 
 /* button definitions */
@@ -206,9 +199,16 @@ static Button buttons[] = {
 /* select a specific client by count on a tag */
 void selectclient(const Arg *arg)
 {
+	// input in arg->i should be < 10 for clients in the master and >= 10 for stack are, e.g. 1 -- second client in master, whereas 10 -- first client in stack
 	int i;
 	Client *c;
-	for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i; c = nexttiled(c->next), i++);
+	if (arg->i < 10) {
+		for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i; c = nexttiled(c->next), i++);
+		if (i != arg->i || i > selmon->nmaster-1) return;
+	} else {
+		for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i-10+selmon->nmaster; c = nexttiled(c->next), i++);
+		if (i != arg->i-10+selmon->nmaster) return;
+	}
 	focus(c);
 	restack(selmon);
 }
