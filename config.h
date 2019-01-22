@@ -57,6 +57,7 @@ static char dmenumon[2] = "0"; /* component of dmenu, manipulated in spawn() */
 void selectclient(const Arg *arg);
 void incgap(const Arg *arg);
 void setgapzero(const Arg *arg);
+void viewrelative(const Arg *arg);
 void moveresize(const Arg *arg);
 void runorraise(const Arg *arg);
 
@@ -150,6 +151,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      setgapzero,     {0}        },
 /* navigating across tags */
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,			XK_h,	   viewrelative,   {.i = -1} },
+	{ MODKEY,			XK_l,	   viewrelative,   {.i = +1} },
 	TAGKEYS(                        XK_semicolon,                   5)
 	TAGKEYS(                        XK_plus,                        0)
 	TAGKEYS(                        XK_ecaron,                      1)
@@ -230,6 +233,28 @@ void setgapzero(const Arg *arg)
 {
 	gappx = 0;
 	arrange(selmon);
+}
+
+/* patch nextprev */
+void viewrelative(const Arg *arg)
+{
+	int i, curtags;
+	int seltag = 0;
+	Arg a;
+
+	curtags = selmon->tagset[selmon->seltags];
+	for(i = 0; i < LENGTH(tags); i++)
+		if(curtags & (1 << i)){
+			seltag = i;
+			break;
+		}
+
+	seltag = (seltag + arg->i) % (int)LENGTH(tags);
+	if(seltag < 0)
+		seltag += LENGTH(tags);
+
+	a.i = (1 << seltag);
+	view(&a);
 }
 
 /* move floating clients using keyboard (patch moveresize) */
