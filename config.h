@@ -55,6 +55,7 @@ static char dmenumon[2] = "0"; /* component of dmenu, manipulated in spawn() */
 
 /* custom functions declarations */
 void selectclient(const Arg *arg);
+void cyclefloating(const Arg *arg);
 void incgap(const Arg *arg);
 void setgapzero(const Arg *arg);
 void viewrelative(const Arg *arg);
@@ -126,6 +127,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      selectclient,   {.i = 10} },
 	{ MODKEY,                       XK_comma,  selectclient,   {.i = 11} },
 	{ MODKEY|ShiftMask,             XK_comma,  selectclient,   {.i = 12} },
+	{ MODKEY,                       XK_i,      cyclefloating,  {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_j,      focusstack,     {.i = +1} },
 	{ MODKEY|ControlMask|ShiftMask, XK_k,      focusstack,     {.i = -1} },
 /* setting layouts */
@@ -136,8 +138,8 @@ static Key keys[] = {
 /* moving windows */
         { MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
         { MODKEY|ControlMask,           XK_k,      pushup,         {0} },
-	{ MODKEY|ControlMask,           XK_h,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 /* resizing windows */
 	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
@@ -146,13 +148,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 /* controling the gap size */
-	{ MODKEY,                       XK_i,      incgap,         {.i = +2 } },
-	{ MODKEY,                       XK_o,      incgap,         {.i = -2 } },
-	{ MODKEY,                       XK_p,      setgapzero,     {0}        },
+	{ MODKEY|ShiftMask,             XK_i,      incgap,         {.i = +2 } },
+	{ MODKEY|ShiftMask,             XK_o,      incgap,         {.i = -2 } },
+	{ MODKEY|ShiftMask,             XK_p,      setgapzero,     {0}        },
 /* navigating across tags */
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,			XK_h,	   viewrelative,   {.i = -1} },
-	{ MODKEY,			XK_l,	   viewrelative,   {.i = +1} },
 	TAGKEYS(                        XK_semicolon,                   5)
 	TAGKEYS(                        XK_plus,                        0)
 	TAGKEYS(                        XK_ecaron,                      1)
@@ -178,11 +178,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-/* multiple monitor shit I don't use */
-	{ MODKEY,                       XK_parenleft,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_parenright, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_parenleft,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_parenright, tagmon,         {.i = +1 } },
+/* multiple monitors  */
+	{ MODKEY,			XK_h,	   focusmon,   {.i = -1} },
+	{ MODKEY,			XK_l,	   focusmon,   {.i = +1} },
+	{ MODKEY|ControlMask,           XK_h,	   tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_l,	   tagmon,         {.i = +1 } },
 };
 
 /* button definitions */
@@ -217,6 +217,26 @@ void selectclient(const Arg *arg)
 	}
 	focus(c);
 	restack(selmon);
+}
+/* cycle through floating clients on current tag*/
+void cyclefloating(const Arg *arg)
+{
+	Client *c;
+	for (c = selmon->clients; c && (!c->isfloating || !ISVISIBLE(c)); c = c->next);
+	focus(c);
+	restack(selmon);
+}
+
+/* select a specific monitor (usually left or right without scrolling functionality) */
+void selectmon(const Arg *arg)
+{
+	Monitor *m;
+
+	int i;
+	for (m = mons, i = 0; m->next && i < arg->i; m = m->next, ++i);
+	unfocus(selmon->sel, 0);
+	selmon = m;
+	focus(NULL);
 }
 
 /* increase the gap between windows (by ME) */
