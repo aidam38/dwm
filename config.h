@@ -41,7 +41,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      tag,     {.ui = 1 << TAG} }, \
@@ -108,18 +108,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
 /* function keys bindings (volume control, screencasting) */
-	{ 0,                            XK_F3,     spawn,          {.v = volumeup } },
-	{ 0,                            XK_F2,     spawn,          {.v = volumedown } },
+	{ MODKEY,                            XK_F3,     spawn,          {.v = volumeup } },
+	{ MODKEY,                            XK_F2,     spawn,          {.v = volumedown } },
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeUP } },
 	{ MODKEY,                       XK_F2,     spawn,          {.v = volumeDOWN } },
-	{ 0,                            XK_F1,     spawn,          {.v = volumemute } },
-	{ 0,                            XK_F9,     spawn,          {.v = caststart } },
-	{ 0,                            XK_F10,    spawn,          {.v = caststop } },
+	{ MODKEY,                            XK_F1,     spawn,          {.v = volumemute } },
+	{ MODKEY,                            XK_F9,     spawn,          {.v = caststart } },
+	{ MODKEY,                            XK_F10,    spawn,          {.v = caststop } },
 /* application control */
-	{ 0,                            XK_Print,  spawn,          {.v = printscreen } },
-	{ 0,                            XK_Home,   spawn,          {.v = sptrestart } },
-	{ 0,                            XK_End,    spawn,          {.v = sptshow } },
-	{ 0,                            XK_Pause,  spawn,          {.v = sptpause } },
+	{ MODKEY,                            XK_Print,  spawn,          {.v = printscreen } },
+	{ MODKEY,                            XK_Home,   spawn,          {.v = sptrestart } },
+	{ MODKEY,                            XK_End,    spawn,          {.v = sptshow } },
+	{ MODKEY,                            XK_Pause,  spawn,          {.v = sptpause } },
 /* basic movement */
 	{ MODKEY,                       XK_j,      selectclient,   {.i = 0} },
 	{ MODKEY,                       XK_m,      selectclient,   {.i = 1} },
