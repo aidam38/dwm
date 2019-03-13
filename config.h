@@ -91,6 +91,8 @@ static const char *printscreen[] = { "screenshot", NULL};
 static const char *sptrestart[] = {"sptrestart", NULL};
 static const char *sptshow[] = {"killall", "-SIGUSR1", "spt", NULL};
 static const char *sptpause[] = {"killall", "-SIGUSR2", "spt", NULL};
+static const char *pmathsh[] = {"scratchpad", "pmath.sh", NULL};
+
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -104,22 +106,23 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
-	{ MODKEY,                       XK_f,      spawn,          {.v = fzf } },
+	{ MODKEY,                       XK_f,      spawn,          {.v = pmathsh } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
+
 /* function keys bindings (volume control, screencasting) */
-	{ MODKEY,                            XK_F3,     spawn,          {.v = volumeup } },
-	{ MODKEY,                            XK_F2,     spawn,          {.v = volumedown } },
+	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
+	{ MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeUP } },
 	{ MODKEY,                       XK_F2,     spawn,          {.v = volumeDOWN } },
-	{ MODKEY,                            XK_F1,     spawn,          {.v = volumemute } },
-	{ MODKEY,                            XK_F9,     spawn,          {.v = caststart } },
-	{ MODKEY,                            XK_F10,    spawn,          {.v = caststop } },
+	{ MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
+	{ MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
+	{ MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
 /* application control */
-	{ MODKEY,                            XK_Print,  spawn,          {.v = printscreen } },
-	{ MODKEY,                            XK_Home,   spawn,          {.v = sptrestart } },
-	{ MODKEY,                            XK_End,    spawn,          {.v = sptshow } },
-	{ MODKEY,                            XK_Pause,  spawn,          {.v = sptpause } },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = printscreen } },
+	{ MODKEY,                       XK_Home,   spawn,          {.v = sptrestart } },
+	{ MODKEY,                       XK_End,    spawn,          {.v = sptshow } },
+	{ MODKEY,                       XK_Pause,  spawn,          {.v = sptpause } },
 /* basic movement */
 	{ MODKEY,                       XK_j,      selectclient,   {.i = 0} },
 	{ MODKEY,                       XK_m,      selectclient,   {.i = 1} },
@@ -136,8 +139,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
 /* moving windows */
-        { MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
-        { MODKEY|ControlMask,           XK_k,      pushup,         {0} },
+        { MODKEY|ControlMask,       XK_j,      pushdown,       {0} },
+        { MODKEY|ControlMask,       XK_k,      pushup,         {0} },
 	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
@@ -174,13 +177,13 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Right,   moveresize,     {.v = (int []){ 0, 0, 100, 0 }}},
 	{ MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -100, 0 }}},
 /* miscellaneous */
-	{ MODKEY|ShiftMask,	        XK_x,      quit,           {0} },
+	{ MODKEY|ShiftMask,	            XK_x,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
 	{ MODKEY,                       XK_w,      killclient,     {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 /* multiple monitors  */
-	{ MODKEY,			XK_h,	   focusmon,   {.i = -1} },
-	{ MODKEY,			XK_l,	   focusmon,   {.i = +1} },
+	{ MODKEY,			            XK_h,	   focusmon,   {.i = -1} },
+	{ MODKEY,			            XK_l,	   focusmon,   {.i = +1} },
 	{ MODKEY|ControlMask,           XK_h,	   tagmon,         {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_l,	   tagmon,         {.i = +1 } },
 };
