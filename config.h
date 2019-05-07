@@ -92,6 +92,8 @@ static const char *sptrestart[] = {"sptrestart", NULL};
 static const char *sptshow[] = {"killall", "-SIGUSR1", "spt", NULL};
 static const char *sptpause[] = {"killall", "-SIGUSR2", "spt", NULL};
 static const char *pmathsh[] = {"scratchpad", "pmath.sh", NULL};
+static const char *dmount[] = {"dmount", NULL};
+static const char *dumount[] = {"dumount", NULL};
 
 
 static Key keys[] = {
@@ -101,20 +103,22 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
 	{ MODKEY,                       XK_q,      runorraise,     {.v = qute } },
 	{ MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
-	{ MODKEY,                       XK_r,      spawn,          {.v = lf } },
+	{ MODKEY,                       XK_f,      spawn,          {.v = lf } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = hot } },
 	{ MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
-	{ MODKEY,                       XK_f,      spawn,          {.v = pmathsh } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
+	{ MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
+	{ MODKEY|ShiftMask,             XK_F8,     spawn,          {.v = dumount } },
 
 /* function keys bindings (volume control, screencasting) */
 	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
 	{ MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
-	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeUP } },
-	{ MODKEY,                       XK_F2,     spawn,          {.v = volumeDOWN } },
+	{ MODKEY|ShiftMask,             XK_F3,     spawn,          {.v = volumeUP } },
+	{ MODKEY|ShiftMask,             XK_F2,     spawn,          {.v = volumeDOWN } },
 	{ MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
 	{ MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
 	{ MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
@@ -139,8 +143,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
 /* moving windows */
-        { MODKEY|ControlMask,       XK_j,      pushdown,       {0} },
-        { MODKEY|ControlMask,       XK_k,      pushup,         {0} },
+    { MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
+    { MODKEY|ControlMask,           XK_k,      pushup,         {0} },
 	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
@@ -168,24 +172,24 @@ static Key keys[] = {
 	TAGKEYS(                        XK_iacute,                      9)
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 /* moving floating windows */
-	{ MODKEY,                       XK_Down,    moveresize,     {.v = (int []){ 0, 100, 0, 0 }}},
-	{ MODKEY,                       XK_Up,      moveresize,     {.v = (int []){ 0, -100, 0, 0 }}},
-	{ MODKEY,                       XK_Right,   moveresize,     {.v = (int []){ 100, 0, 0, 0 }}},
-	{ MODKEY,                       XK_Left,    moveresize,     {.v = (int []){ -100, 0, 0, 0 }}},
-	{ MODKEY|ShiftMask,             XK_Down,    moveresize,     {.v = (int []){ 0, 0, 0, 100 }}},
-	{ MODKEY|ShiftMask,             XK_Up,      moveresize,     {.v = (int []){ 0, 0, 0, -100 }}},
-	{ MODKEY|ShiftMask,             XK_Right,   moveresize,     {.v = (int []){ 0, 0, 100, 0 }}},
-	{ MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -100, 0 }}},
+	{ MODKEY,                       XK_Down,    moveresize,     {.v = (int []){ 0, 50, 0, 0 }}},
+	{ MODKEY,                       XK_Up,      moveresize,     {.v = (int []){ 0, -50, 0, 0 }}},
+	{ MODKEY,                       XK_Right,   moveresize,     {.v = (int []){ 50, 0, 0, 0 }}},
+	{ MODKEY,                       XK_Left,    moveresize,     {.v = (int []){ -50, 0, 0, 0 }}},
+	{ MODKEY|ShiftMask,             XK_Down,    moveresize,     {.v = (int []){ 0, 0, 0, 50 }}},
+    { MODKEY|ShiftMask,             XK_Up,      moveresize,     {.v = (int []){ 0, 0, 0, -50 }}},
+    { MODKEY|ShiftMask,             XK_Right,   moveresize,     {.v = (int []){ 0, 0, 50, 0 }}},
+    { MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -50, 0 }}},
 /* miscellaneous */
-	{ MODKEY|ShiftMask,	            XK_x,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
-	{ MODKEY,                       XK_w,      killclient,     {0} },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+    { MODKEY|ShiftMask,             XK_x,      quit,           {0} },
+    { MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
+    { MODKEY,                       XK_w,      killclient,     {0} },
+    { MODKEY,                       XK_b,      togglebar,      {0} },
 /* multiple monitors  */
-	{ MODKEY,			            XK_h,	   focusmon,   {.i = -1} },
-	{ MODKEY,			            XK_l,	   focusmon,   {.i = +1} },
-	{ MODKEY|ControlMask,           XK_h,	   tagmon,         {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_l,	   tagmon,         {.i = +1 } },
+    { MODKEY,                       XK_h,      focusmon,   {.i = -1} },
+    { MODKEY,                       XK_l,      focusmon,   {.i = +1} },
+    { MODKEY|ControlMask,           XK_h,      tagmon,         {.i = -1 } },
+    { MODKEY|ControlMask,           XK_l,      tagmon,         {.i = +1 } },
 };
 
 /* button definitions */
