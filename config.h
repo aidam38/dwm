@@ -9,23 +9,23 @@ static unsigned int gappx           = 15;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-	[SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor },
+    /*               fg         bg         border   */
+    [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+    [SchemeSel]  = { selfgcolor, selbgcolor,  selbordercolor },
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "♫" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           0,         0,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,         0,        -1 },
-	{ "st",       NULL,       NULL,       0,            0,           1,         1,        -1 },
+    /* xprop(1):
+     *  WM_CLASS(STRING) = instance, class
+     *  WM_NAME(STRING) = title
+     */
+    /* class      instance    title       tags mask     isfloating   monitor */
+    { "Gimp",     NULL,       NULL,       0,            1,           0,         0,        -1 },
+    { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,         0,        -1 },
+    { "st",       NULL,       NULL,       0,            0,           1,         1,        -1 },
 };
 
 /* layout(s) */
@@ -34,19 +34,19 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "T ",      tile },    /* first entry is default */
-	{ "F ",      NULL },    /* no layout function means floating behavior */
-	{ "M ",      monocle },
+    /* symbol     arrange function */
+    { "T ",      tile },    /* first entry is default */
+    { "F ",      NULL },    /* no layout function means floating behavior */
+    { "M ",      monocle },
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      tag,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tagfollow,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask,           KEY,      tag,     {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      tagfollow,            {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 static char dmenumon[2] = "0"; /* component of dmenu, manipulated in spawn() */
 
@@ -73,7 +73,7 @@ static const char *news[] = { "st", "-c", "newsboat", "newsboat", NULL, "newsboa
 static const char *clipmenu[] = { "clipmenu", NULL};
 static const char *clipdel[] = { "clipdel", "-d", ".*", NULL};
 static const char *mutt[] = { "st", "-c", "neomutt", "neomutt", NULL, "neomutt" };
-static const char *lf[] = { "st", "lf", NULL};
+static const char *lf[] = { "st", "-e", "lf.sh", NULL};
 static const char *hot[] = { "hot.sh", NULL };
 static const char *spotify[] = { "spotify", NULL, NULL, NULL, NULL, "Spotify" };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
@@ -97,86 +97,86 @@ static const char *dumount[] = {"dumount", NULL};
 
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
+    /* modifier                     key        function        argument */
 /* spawning applications */
-	{ MODKEY,                       XK_Return, spawn,          {.v = term } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
-	{ MODKEY,                       XK_q,      runorraise,     {.v = qute } },
-	{ MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
-	{ MODKEY,                       XK_f,      spawn,          {.v = lf } },
-	{ MODKEY,                       XK_a,      spawn,          {.v = hot } },
-	{ MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
-	{ MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
-	{ MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
-	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
-	{ MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
-	{ MODKEY|ShiftMask,             XK_F8,     spawn,          {.v = dumount } },
+    { MODKEY,                       XK_Return, spawn,          {.v = term } },
+    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
+    { MODKEY,                       XK_q,      runorraise,     {.v = qute } },
+    { MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
+    { MODKEY,                       XK_f,      spawn,          {.v = lf } },
+    { MODKEY,                       XK_a,      spawn,          {.v = hot } },
+    { MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
+    { MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
+    { MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
+    { MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
+    { MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
+    { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
+    { MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
+    { MODKEY|ShiftMask,             XK_F8,     spawn,          {.v = dumount } },
 
 /* function keys bindings (volume control, screencasting) */
-	{ MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
-	{ MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
-	{ MODKEY|ShiftMask,             XK_F3,     spawn,          {.v = volumeUP } },
-	{ MODKEY|ShiftMask,             XK_F2,     spawn,          {.v = volumeDOWN } },
-	{ MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
-	{ MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
-	{ MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
+    { MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
+    { MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
+    { MODKEY|ShiftMask,             XK_F3,     spawn,          {.v = volumeUP } },
+    { MODKEY|ShiftMask,             XK_F2,     spawn,          {.v = volumeDOWN } },
+    { MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
+    { MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
+    { MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
 /* application control */
-	{ MODKEY,                       XK_Print,  spawn,          {.v = printscreen } },
-	{ MODKEY,                       XK_Home,   spawn,          {.v = sptrestart } },
-	{ MODKEY,                       XK_End,    spawn,          {.v = sptshow } },
-	{ MODKEY,                       XK_Pause,  spawn,          {.v = sptpause } },
+    { MODKEY,                       XK_Print,  spawn,          {.v = printscreen } },
+    { MODKEY,                       XK_Home,   spawn,          {.v = sptrestart } },
+    { MODKEY,                       XK_End,    spawn,          {.v = sptshow } },
+    { MODKEY,                       XK_Pause,  spawn,          {.v = sptpause } },
 /* basic movement */
-	{ MODKEY,                       XK_j,      selectclient,   {.i = 0} },
-	{ MODKEY,                       XK_m,      selectclient,   {.i = 1} },
-	{ MODKEY|ShiftMask,             XK_m,      selectclient,   {.i = 2} },
-	{ MODKEY,                       XK_k,      selectclient,   {.i = 10} },
-	{ MODKEY,                       XK_comma,  selectclient,   {.i = 11} },
-	{ MODKEY|ShiftMask,             XK_comma,  selectclient,   {.i = 12} },
-	{ MODKEY,                       XK_i,      cyclefloating,  {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_j,      focusstack,     {.i = +1} },
-	{ MODKEY|ControlMask|ShiftMask, XK_k,      focusstack,     {.i = -1} },
+    { MODKEY,                       XK_j,      selectclient,   {.i = 0} },
+    { MODKEY,                       XK_m,      selectclient,   {.i = 1} },
+    { MODKEY|ShiftMask,             XK_m,      selectclient,   {.i = 2} },
+    { MODKEY,                       XK_k,      selectclient,   {.i = 10} },
+    { MODKEY,                       XK_comma,  selectclient,   {.i = 11} },
+    { MODKEY|ShiftMask,             XK_comma,  selectclient,   {.i = 12} },
+    { MODKEY,                       XK_i,      cyclefloating,  {0} },
+    { MODKEY|ControlMask|ShiftMask, XK_j,      focusstack,     {.i = +1} },
+    { MODKEY|ControlMask|ShiftMask, XK_k,      focusstack,     {.i = -1} },
 /* setting layouts */
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_z,      togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
+    { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+    { MODKEY,                       XK_z,      togglefloating, {0} },
+    { MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
 /* moving windows */
     { MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
     { MODKEY|ControlMask,           XK_k,      pushup,         {0} },
-	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_space,  zoom,           {0} },
+    { MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
+    { MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
+    { MODKEY,                       XK_space,  zoom,           {0} },
 /* resizing windows */
-	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_j,      setcfact,       {.f = +0.25} },
-	{ MODKEY|ShiftMask,             XK_k,      setcfact,       {.f = -0.25} },
-	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
+    { MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
+    { MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
+    { MODKEY|ShiftMask,             XK_j,      setcfact,       {.f = +0.25} },
+    { MODKEY|ShiftMask,             XK_k,      setcfact,       {.f = -0.25} },
+    { MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 /* controling the gap size */
-	{ MODKEY|ShiftMask,             XK_i,      incgap,         {.i = +2 } },
-	{ MODKEY|ShiftMask,             XK_o,      incgap,         {.i = -2 } },
-	{ MODKEY|ShiftMask,             XK_p,      setgapzero,     {0}        },
+    { MODKEY|ShiftMask,             XK_i,      incgap,         {.i = +2 } },
+    { MODKEY|ShiftMask,             XK_o,      incgap,         {.i = -2 } },
+    { MODKEY|ShiftMask,             XK_p,      setgapzero,     {0}        },
 /* navigating across tags */
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	TAGKEYS(                        XK_semicolon,                   5)
-	TAGKEYS(                        XK_plus,                        0)
-	TAGKEYS(                        XK_ecaron,                      1)
-	TAGKEYS(                        XK_scaron,                      2)
-	TAGKEYS(                        XK_ccaron,                      3)
-	TAGKEYS(                        XK_rcaron,                      4)
-	TAGKEYS(                        XK_zcaron,                      6)
-	TAGKEYS(                        XK_yacute,                      7)
-	TAGKEYS(                        XK_aacute,                      8)
-	TAGKEYS(                        XK_iacute,                      9)
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+    { MODKEY,                       XK_Tab,    view,           {0} },
+    TAGKEYS(                        XK_semicolon,                   5)
+    TAGKEYS(                        XK_plus,                        0)
+    TAGKEYS(                        XK_ecaron,                      1)
+    TAGKEYS(                        XK_scaron,                      2)
+    TAGKEYS(                        XK_ccaron,                      3)
+    TAGKEYS(                        XK_rcaron,                      4)
+    TAGKEYS(                        XK_zcaron,                      6)
+    TAGKEYS(                        XK_yacute,                      7)
+    TAGKEYS(                        XK_aacute,                      8)
+    TAGKEYS(                        XK_iacute,                      9)
+    { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 /* moving floating windows */
-	{ MODKEY,                       XK_Down,    moveresize,     {.v = (int []){ 0, 50, 0, 0 }}},
-	{ MODKEY,                       XK_Up,      moveresize,     {.v = (int []){ 0, -50, 0, 0 }}},
-	{ MODKEY,                       XK_Right,   moveresize,     {.v = (int []){ 50, 0, 0, 0 }}},
-	{ MODKEY,                       XK_Left,    moveresize,     {.v = (int []){ -50, 0, 0, 0 }}},
-	{ MODKEY|ShiftMask,             XK_Down,    moveresize,     {.v = (int []){ 0, 0, 0, 50 }}},
+    { MODKEY,                       XK_Down,    moveresize,     {.v = (int []){ 0, 50, 0, 0 }}},
+    { MODKEY,                       XK_Up,      moveresize,     {.v = (int []){ 0, -50, 0, 0 }}},
+    { MODKEY,                       XK_Right,   moveresize,     {.v = (int []){ 50, 0, 0, 0 }}},
+    { MODKEY,                       XK_Left,    moveresize,     {.v = (int []){ -50, 0, 0, 0 }}},
+    { MODKEY|ShiftMask,             XK_Down,    moveresize,     {.v = (int []){ 0, 0, 0, 50 }}},
     { MODKEY|ShiftMask,             XK_Up,      moveresize,     {.v = (int []){ 0, 0, 0, -50 }}},
     { MODKEY|ShiftMask,             XK_Right,   moveresize,     {.v = (int []){ 0, 0, 50, 0 }}},
     { MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -50, 0 }}},
@@ -195,93 +195,93 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = term } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    /* click                event mask      button          function        argument */
+    { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+    { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
+    { ClkStatusText,        0,              Button2,        spawn,          {.v = term } },
+    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+    { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+    { ClkTagBar,            0,              Button1,        view,           {0} },
+    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
 /* select a specific client by count on a tag */
 void selectclient(const Arg *arg)
 {
-	// input in arg->i should be < 10 for clients in the master and >= 10 for stack are, e.g. 1 -- second client in master, whereas 10 -- first client in stack
-	int i;
-	Client *c;
-	if (arg->i < 10) {
-		for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i; c = nexttiled(c->next), i++);
-		if (i != arg->i || i > selmon->nmaster-1) return;
-	} else {
-		for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i-10+selmon->nmaster; c = nexttiled(c->next), i++);
-		if (i != arg->i-10+selmon->nmaster) return;
-	}
-	focus(c);
-	restack(selmon);
+    // input in arg->i should be < 10 for clients in the master and >= 10 for stack are, e.g. 1 -- second client in master, whereas 10 -- first client in stack
+    int i;
+    Client *c;
+    if (arg->i < 10) {
+        for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i; c = nexttiled(c->next), i++);
+        if (i != arg->i || i > selmon->nmaster-1) return;
+    } else {
+        for(i = 0, c = nexttiled(selmon->clients); c && i < arg->i-10+selmon->nmaster; c = nexttiled(c->next), i++);
+        if (i != arg->i-10+selmon->nmaster) return;
+    }
+    focus(c);
+    restack(selmon);
 }
 /* cycle through floating clients on current tag*/
 void cyclefloating(const Arg *arg)
 {
-	Client *c;
-	for (c = selmon->clients; c && (!c->isfloating || !ISVISIBLE(c)); c = c->next);
-	focus(c);
-	restack(selmon);
+    Client *c;
+    for (c = selmon->clients; c && (!c->isfloating || !ISVISIBLE(c)); c = c->next);
+    focus(c);
+    restack(selmon);
 }
 
 /* select a specific monitor (usually left or right without scrolling functionality) */
 void selectmon(const Arg *arg)
 {
-	Monitor *m;
+    Monitor *m;
 
-	int i;
-	for (m = mons, i = 0; m->next && i < arg->i; m = m->next, ++i);
-	unfocus(selmon->sel, 0);
-	selmon = m;
-	focus(NULL);
+    int i;
+    for (m = mons, i = 0; m->next && i < arg->i; m = m->next, ++i);
+    unfocus(selmon->sel, 0);
+    selmon = m;
+    focus(NULL);
 }
 
 /* increase the gap between windows (by ME) */
 void incgap(const Arg *arg)
 {
-	gappx = MAX(gappx + arg->i, 0);
-	if (gappx <= 0)
-		gappx = 0;
-	arrange(selmon);
+    gappx = MAX(gappx + arg->i, 0);
+    if (gappx <= 0)
+        gappx = 0;
+    arrange(selmon);
 }
 
 /* set the gap between windows to zero (by ME) */
 void setgapzero(const Arg *arg)
 {
-	gappx = 0;
-	arrange(selmon);
+    gappx = 0;
+    arrange(selmon);
 }
 
 /* patch nextprev */
 void viewrelative(const Arg *arg)
 {
-	int i, curtags;
-	int seltag = 0;
-	Arg a;
+    int i, curtags;
+    int seltag = 0;
+    Arg a;
 
-	curtags = selmon->tagset[selmon->seltags];
-	for(i = 0; i < LENGTH(tags); i++)
-		if(curtags & (1 << i)){
-			seltag = i;
-			break;
-		}
+    curtags = selmon->tagset[selmon->seltags];
+    for(i = 0; i < LENGTH(tags); i++)
+        if(curtags & (1 << i)){
+            seltag = i;
+            break;
+        }
 
-	seltag = (seltag + arg->i) % (int)LENGTH(tags);
-	if(seltag < 0)
-		seltag += LENGTH(tags);
+    seltag = (seltag + arg->i) % (int)LENGTH(tags);
+    if(seltag < 0)
+        seltag += LENGTH(tags);
 
-	a.i = (1 << seltag);
-	view(&a);
+    a.i = (1 << seltag);
+    view(&a);
 }
 
 /* move floating clients using keyboard (patch moveresize) */
@@ -305,31 +305,31 @@ void moveresize(const Arg *arg)
 /* move floating clients to one thirds of screen (patch moveplace) */
 void moveplace(const Arg *arg)
 {
-	Client *c;
-	int nh, nw, nx, ny;
-	c = selmon->sel;
-	if (!c || (arg->ui >= 9))
-		 return;
-	if (selmon->lt[selmon->sellt]->arrange && !c->isfloating)
-		togglefloating(NULL);
-	nh = (selmon->wh / 3) - (c->bw * 2);
-	nw = (selmon->ww / 3) - (c->bw * 2);
-	nx = (arg->ui % 3) -1;
-	ny = (arg->ui / 3) -1;
-	if (nx < 0)
-		nx = selmon->wx;
-	else if(nx > 0)
-		nx = selmon->wx + selmon->ww - nw - c->bw*2;
-	else
-		nx = selmon->wx + selmon->ww/2 - nw/2 - c->bw;
-	if (ny <0)
-		ny = selmon->wy;
-	else if(ny > 0)
-		ny = selmon->wy + selmon->wh - nh - c->bw*2;
-	else
-		ny = selmon->wy + selmon->wh/2 - nh/2 - c->bw;
-	resize(c, nx, ny, nw, nh, True);
-	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, nw/2, nh/2);
+    Client *c;
+    int nh, nw, nx, ny;
+    c = selmon->sel;
+    if (!c || (arg->ui >= 9))
+         return;
+    if (selmon->lt[selmon->sellt]->arrange && !c->isfloating)
+        togglefloating(NULL);
+    nh = (selmon->wh / 3) - (c->bw * 2);
+    nw = (selmon->ww / 3) - (c->bw * 2);
+    nx = (arg->ui % 3) -1;
+    ny = (arg->ui / 3) -1;
+    if (nx < 0)
+        nx = selmon->wx;
+    else if(nx > 0)
+        nx = selmon->wx + selmon->ww - nw - c->bw*2;
+    else
+        nx = selmon->wx + selmon->ww/2 - nw/2 - c->bw;
+    if (ny <0)
+        ny = selmon->wy;
+    else if(ny > 0)
+        ny = selmon->wy + selmon->wh - nh - c->bw*2;
+    else
+        ny = selmon->wy + selmon->wh/2 - nh/2 - c->bw;
+    resize(c, nx, ny, nw, nh, True);
+    XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, nw/2, nh/2);
 }
 
 /* run or raise windows (patch runorraise) */
