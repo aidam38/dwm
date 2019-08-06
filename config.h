@@ -78,29 +78,30 @@ static const char *hot[] = { "hot.sh", NULL };
 static const char *spotify[] = { "spotify", NULL, NULL, NULL, NULL, "Spotify" };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenu_res[] = { "dmenu_run_res", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
-static const char *fzf[] = { "st", "-e", "fzf.sh", NULL };
-static const char *exitprompt[] = { "exitprompt", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
-static const char *volumeup[] = { "pamixer", "-i", "5", NULL };
-static const char *volumedown[] = { "pamixer", "-d", "5", NULL };
-static const char *volumeUP[] = { "pamixer", "-i", "25", NULL };
-static const char *volumeDOWN[] = { "pamixer", "-d", "25", NULL };
-static const char *volumemute[] = { "pamixer", "-t", NULL };
-static const char *caststart[] = { "st", "-e", "screencast", NULL };
-static const char *caststop[] = { "killall", "screencast", NULL };
-static const char *printscreen[] = { "screenshot", NULL};
-static const char *sptrestart[] = {"sptrestart", NULL};
-static const char *sptshow[] = {"killall", "-SIGUSR1", "spt", NULL};
-static const char *sptpause[] = {"killall", "-SIGUSR2", "spt", NULL};
+// static const char *fzf[] = { "st", "-e", "fzf.sh", NULL };
+// static const char *exitprompt[] = { "exitprompt", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
+// static const char *volumeup[] = { "pamixer", "-i", "5", NULL };
+// static const char *volumedown[] = { "pamixer", "-d", "5", NULL };
+// static const char *volumeUP[] = { "pamixer", "-i", "25", NULL };
+// static const char *volumeDOWN[] = { "pamixer", "-d", "25", NULL };
+// static const char *volumemute[] = { "pamixer", "-t", NULL };
+// static const char *caststart[] = { "st", "-e", "screencast", NULL };
+// static const char *caststop[] = { "killall", "screencast", NULL };
+// static const char *printscreen[] = { "screenshot", NULL};
+// static const char *sptrestart[] = {"sptrestart", NULL};
+// static const char *sptshow[] = {"killall", "-SIGUSR1", "spt", NULL};
+// static const char *sptpause[] = {"killall", "-SIGUSR2", "spt", NULL};
 static const char *pmathsh[] = {"scratchpad", "pmath.sh", NULL};
-static const char *dmount[] = {"dmount", NULL};
-static const char *dumount[] = {"dumount", NULL};
+// static const char *dmount[] = {"dmount", NULL};
+// static const char *dumount[] = {"dumount", NULL};
 
 
 static Key keys[] = {
+	// commented lines now replaced by sxhkd
     /* modifier                     key        function        argument */
 /* spawning applications */
-    { MODKEY,                       XK_Return, spawn,          {.v = term } },
-    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
+    // { MODKEY,                       XK_Return, spawn,          {.v = term } },
+    // { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
     { MODKEY,                       XK_q,      runorraise,     {.v = qute } },
     { MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
     { MODKEY,                       XK_f,      spawn,          {.v = lf } },
@@ -109,24 +110,24 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
     { MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
-    { MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
-    { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
-    { MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
-    { MODKEY|ShiftMask,             XK_F8,     spawn,          {.v = dumount } },
+    // { MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
+    // { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
+    // { MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
+    // { MODKEY|ShiftMask,             XK_F8,     spawn,          {.v = dumount } },
 
 /* function keys bindings (volume control, screencasting) */
-    { MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
-    { MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
-    { MODKEY|ShiftMask,             XK_F3,     spawn,          {.v = volumeUP } },
-    { MODKEY|ShiftMask,             XK_F2,     spawn,          {.v = volumeDOWN } },
-    { MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
-    { MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
-    { MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
+    // { MODKEY,                       XK_F3,     spawn,          {.v = volumeup } },
+    // { MODKEY,                       XK_F2,     spawn,          {.v = volumedown } },
+    // { MODKEY|ShiftMask,             XK_F3,     spawn,          {.v = volumeUP } },
+    // { MODKEY|ShiftMask,             XK_F2,     spawn,          {.v = volumeDOWN } },
+    // { MODKEY,                       XK_F1,     spawn,          {.v = volumemute } },
+    // { MODKEY,                       XK_F9,     spawn,          {.v = caststart } },
+    // { MODKEY,                       XK_F10,    spawn,          {.v = caststop } },
 /* application control */
-    { MODKEY,                       XK_Print,  spawn,          {.v = printscreen } },
-    { MODKEY,                       XK_Home,   spawn,          {.v = sptrestart } },
-    { MODKEY,                       XK_End,    spawn,          {.v = sptshow } },
-    { MODKEY,                       XK_Pause,  spawn,          {.v = sptpause } },
+    // { MODKEY,                       XK_Print,  spawn,          {.v = printscreen } },
+    // { MODKEY,                       XK_Home,   spawn,          {.v = sptrestart } },
+    // { MODKEY,                       XK_End,    spawn,          {.v = sptshow } },
+    // { MODKEY,                       XK_Pause,  spawn,          {.v = sptpause } },
 /* basic movement */
     { MODKEY,                       XK_j,      selectclient,   {.i = 0} },
     { MODKEY,                       XK_m,      selectclient,   {.i = 1} },
@@ -182,7 +183,6 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Left,    moveresize,     {.v = (int []){ 0, 0, -50, 0 }}},
 /* miscellaneous */
     { MODKEY|ShiftMask,             XK_x,      quit,           {0} },
-    { MODKEY|ShiftMask,             XK_y,      spawn,          {.v = exitprompt } },
     { MODKEY,                       XK_w,      killclient,     {0} },
     { MODKEY,                       XK_b,      togglebar,      {0} },
 /* multiple monitors  */
