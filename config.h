@@ -61,6 +61,8 @@ void setgapzero(const Arg *arg);
 void viewrelative(const Arg *arg);
 void moveresize(const Arg *arg);
 void runorraise(const Arg *arg);
+void togglefullscreen(const Arg *arg);
+void togglefloatingandresize(const Arg *arg);
 
 enum { WIN_NW, WIN_N, WIN_NE, WIN_W, WIN_C, WIN_E, WIN_SW, WIN_S, WIN_SE }; /* coordinates for moveplace */
 void moveplace(const Arg *arg);
@@ -68,16 +70,16 @@ void moveplace(const Arg *arg);
 /* commands */
 static const char *term[]  = { "st", NULL };
 static const char *scratchpad[]  = { "scratchpad", NULL };
-static const char *qute[] = { "qutebrowser", NULL, NULL, NULL, NULL, "qutebrowser" };
-static const char *news[] = { "st", "-c", "newsboat", "newsboat", NULL, "newsboat" };
-static const char *clipmenu[] = { "clipmenu", NULL};
-static const char *clipdel[] = { "clipdel", "-d", ".*", NULL};
-static const char *mutt[] = { "st", "-c", "neomutt", "neomutt", NULL, "neomutt" };
-static const char *lf[] = { "st", "-e", "lf.sh", NULL};
-static const char *hot[] = { "hot.sh", NULL };
-static const char *spotify[] = { "spotify", NULL, NULL, NULL, NULL, "Spotify" };
+// static const char *qute[] = { "qutebrowser", NULL, NULL, NULL, NULL, "qutebrowser" };
+// static const char *news[] = { "st", "-c", "newsboat", "newsboat", NULL, "newsboat" };
+// static const char *clipmenu[] = { "clipmenu", NULL};
+// static const char *clipdel[] = { "clipdel", "-d", ".*", NULL};
+// static const char *mutt[] = { "st", "-c", "neomutt", "neomutt", NULL, "neomutt" };
+// static const char *lf[] = { "st", "-e", "lf.sh", NULL};
+// static const char *hot[] = { "hot.sh", NULL };
+// static const char *spotify[] = { "spotify", NULL, NULL, NULL, NULL, "Spotify" };
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenu_res[] = { "dmenu_run_res", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
+// static const char *dmenu_res[] = { "dmenu_run_res", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
 // static const char *fzf[] = { "st", "-e", "fzf.sh", NULL };
 // static const char *exitprompt[] = { "exitprompt", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL }; 
 // static const char *volumeup[] = { "pamixer", "-i", "5", NULL };
@@ -91,7 +93,7 @@ static const char *dmenu_res[] = { "dmenu_run_res", "-m", dmenumon, "-fn", dmenu
 // static const char *sptrestart[] = {"sptrestart", NULL};
 // static const char *sptshow[] = {"killall", "-SIGUSR1", "spt", NULL};
 // static const char *sptpause[] = {"killall", "-SIGUSR2", "spt", NULL};
-static const char *pmathsh[] = {"scratchpad", "pmath.sh", NULL};
+// static const char *pmathsh[] = {"scratchpad", "pmath.sh", NULL};
 // static const char *dmount[] = {"dmount", NULL};
 // static const char *dumount[] = {"dumount", NULL};
 
@@ -100,16 +102,16 @@ static Key keys[] = {
 	// commented lines now replaced by sxhkd
     /* modifier                     key        function        argument */
 /* spawning applications */
-    // { MODKEY,                       XK_Return, spawn,          {.v = term } },
-    // { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
-    { MODKEY,                       XK_q,      runorraise,     {.v = qute } },
-    { MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
-    { MODKEY,                       XK_f,      spawn,          {.v = lf } },
-    { MODKEY,                       XK_a,      spawn,          {.v = hot } },
-    { MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
-    { MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
-    { MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
-    { MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
+    { MODKEY,                       XK_Return, spawn,          {.v = term } },
+    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = scratchpad } },
+    // { MODKEY,                       XK_q,      runorraise,     {.v = qute } },
+    // { MODKEY,                       XK_e,      runorraise,     {.v = mutt } },
+    // { MODKEY,                       XK_f,      spawn,          {.v = lf } },
+    // { MODKEY,                       XK_a,      spawn,          {.v = hot } },
+    // { MODKEY,                       XK_s,      runorraise,     {.v = spotify } },
+    // { MODKEY|ShiftMask,             XK_d,      spawn,          {.v = dmenucmd } },
+    // { MODKEY,                       XK_d,      spawn,          {.v = dmenu_res } },
+    // { MODKEY,                       XK_r,      spawn,          {.v = pmathsh } },
     // { MODKEY,                       XK_c,      spawn,          {.v = clipmenu } },
     // { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = clipdel } },
     // { MODKEY,                       XK_F8,     spawn,          {.v = dmount } },
@@ -140,15 +142,15 @@ static Key keys[] = {
     { MODKEY|ControlMask|ShiftMask, XK_k,      focusstack,     {.i = -1} },
 /* setting layouts */
     { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-    { MODKEY,                       XK_z,      togglefloating, {0} },
-    { MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[1]} },
+    { MODKEY,                       XK_z,      setlayout,      {.v = &layouts[1]} },
     { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[2]} },
 /* moving windows */
     { MODKEY|ControlMask,           XK_j,      pushdown,       {0} },
     { MODKEY|ControlMask,           XK_k,      pushup,         {0} },
     { MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
     { MODKEY|ControlMask,           XK_o,      incnmaster,     {.i = -1 } },
-    { MODKEY,                       XK_space,  zoom,           {0} },
+    { MODKEY,                       XK_space,  togglefullscreen,{0} },
+    { MODKEY|ShiftMask,             XK_space,  togglefloatingandresize, {0} },
 /* resizing windows */
     { MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
     { MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
@@ -354,4 +356,19 @@ void runorraise(const Arg *arg) {
     }
     /* Client not found: spawn it */
     spawn(arg);
+}
+
+void
+togglefullscreen(const Arg *arg) {
+    if (!selmon->sel)
+        return;
+
+    setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+}
+
+void
+togglefloatingandresize(const Arg *arg) {
+	togglefloating(NULL);
+	arrange(selmon);
+	restack(selmon);
 }
